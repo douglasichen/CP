@@ -26,22 +26,28 @@ int solve(int n, unordered_map<int,vector<int>> g) {
 	vector<bool> hasBoss(n+1);
 	for (int i=1; i<=n; i++) {
 		for (int lackey : g[i]) {
-			hasBoss[lackey]=true;
+			if (!hasBoss[lackey])
+				hasBoss[lackey]=true;
+			else {
+				return 0;
+			}
 
 			exists[i]=true;
 			exists[lackey]=true;
 		}
 	}
 	int boss=0;
-	for (int i=1; i<n; i++) {
+	int k=0;
+	for (int i=1; i<=n; i++) {
 		if (exists[i]) {
 			if (!hasBoss[i]) {
 				boss=i;
-				break;
+				k++;
 			}
 		}
 	}
-	if (!boss) return 0;
+	if (k!=1) return 0;
+	if (boss==0) return 0;
 
 	if (works(g,boss)) {
 		// cout << "works..." << endl;
@@ -74,7 +80,7 @@ int main() {
 		}
 	}
 	for (int i : ans) {
-		if (i) {
+		if (i>0) {
 			cout << i << endl;
 		}
 		else {
