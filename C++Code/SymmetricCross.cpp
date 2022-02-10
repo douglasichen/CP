@@ -23,31 +23,6 @@ vector<int> mult(vector<int> a, int b) {
 }
 
 bool good(int y, int x, int k) {
-	// vector<bool> right, compare;
-	// for (int i=x+1; i<=x+k; i++)
-	// 	right.push_back(g[y][i]);
-	// for (int i=x-1; i>=x-k; i--) {
-	// 	compare.push_back(g[y][i]);
-	// 	int index=compare.size()-1;
-	// 	if (compare[index]!=right[index])
-	// 		return false;
-	// }
-	// compare.clear();
-	// for (int i=y-1; i>=y-k; i--) {
-	// 	compare.push_back(g[i][x]);
-	// 	int index=compare.size()-1;
-	// 	if (compare[index]!=right[index])
-	// 		return false;
-	// }
-	// compare.clear();
-	// for (int i=y+1; i<=y+k; i++) {
-	// 	compare.push_back(g[i][x]);
-	// 	int index=compare.size()-1;
-	// 	if (compare[index]!=right[index])
-	// 		return false;
-	// }
-
-
 	for (int i=1; i<=k; i++) {
 		bool ok=1;
 		vector<int> d=addVec({y,x}, mult(dirs[0],i));
@@ -89,12 +64,6 @@ pair<int,int> works(int k) {
 
 void solve(int maxK) {
 
-	// for (int i=0; i<=maxK; i++) {
-	// 	pair<int,int> t=works(i);
-	// 	cout << t.first << " " << t.second << endl;
-	// }
-	// return;
-
 	pair<int,int> loc=works(maxK);
 	if (loc.first!=-1) {
 		cout << maxK << ' ' << loc.first+1 << ' ' << loc.second+1 << endl;
@@ -115,17 +84,6 @@ void solve(int maxK) {
 		// if (abs(right-left)<=1) break;
 	}
 	cout << left << ' ' << loc.first+1 << ' ' << loc.second+1 << endl;
-
-	// int ans=0;
-	// pair<int,int> loc;
-	// for (int i=maxK; i>=0; i--) {
-	// 	loc=works(i);	
-	// 	if (loc.first!=-1) {
-	// 		ans=i;
-	// 		break;
-	// 	}
-	// }
-	// cout << ans << ' ' << loc.first+1 << ' ' << loc.second+1 << endl;
 }
 
 int main() {
