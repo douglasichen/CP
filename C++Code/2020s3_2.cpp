@@ -7,7 +7,10 @@ void solve() {
 
 int main() {
 	string N,H; cin>>N>>H;
-
+	if (N.size()>H.size()) {
+		cout << 0 << endl;
+		return 0;
+	}
 	// set
 	unordered_map<char,int> proper;
 	for (char c='a'; c<='z'; c++)

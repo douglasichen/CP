@@ -19,10 +19,6 @@ int main() {
 	}
 	sort(goTo.begin(), goTo.end(), sorter);
 
-	// for (vector<int> go : goTo) {
-	// 	cout << go[0] << " " << go[1] << endl;
-	// }
-
 	unordered_map<int,bool> failed;
 	int aval=1;
 	for (int i=1; i<=P; i++) {
