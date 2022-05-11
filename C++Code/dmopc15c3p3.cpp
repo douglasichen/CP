@@ -2,26 +2,22 @@
 using namespace std;
 
 int N,M;
-unordered_map<int,vector<int>> G;
+bool ans=0;
+vector<vector<int>> G;
+vector<bool> vis;
+vector<int> dis;
 
-vector<int> vis(21);
-bool dfs(int root, int start, int dis) {
-	vis[root]=1;
-	for (int i : G[start]) {
+void dfs(int at) {
+	vis[at]=1;
+	for (int i : G[at]) {
 		if (!vis[i]) {
-			dfs(root,i,dis+1);
+			dis[i]=dis[at]+1;
+			dfs(i);
 		}
 		else {
-			if(i==root && dis==)
+			if (dis[at]+1-dis[i]==6) ans=1;
 		}
 	}
-}
-
-bool solve() {
-	for (int i=1; i<=N; i++) {
-		if (dfs(i,i,0)) return 1;
-	}
-	return 0;
 }
 
 int main() {
@@ -29,10 +25,17 @@ int main() {
 	cin.tie(0);
 
 	cin>>N>>M;
-	for (int i=0; i<N; i++) {
-		int a,b; cin>>a>>b;	
+	G=vector<vector<int>>(N+1);
+	vis=vector<bool>(N+1);
+	for (int i=0,a,b; i<M; i++) {
+		cin>>a>>b;
 		G[a].push_back(b);
 		G[b].push_back(a);
 	}
-	cout << (solve() ? "YES" : "NO") << endl;
+	for (int i=1; i<=N; i++) {
+		dis=vector<int>(N+1);
+		if (!vis[i]) dfs(i);
+	}
+	if (ans) cout << "YES" << endl;
+	else cout << "NO" << endl;
 }

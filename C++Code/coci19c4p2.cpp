@@ -1,54 +1,54 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-void solve() {
+vector<int> V,A;
 
+bool cmp(int a, int b) {
+    return A[a]>A[b];
 }
 
 int main() {
-	cin.sync_with_stdio(0);
-	cin.tie(0);
-
-	int N,K; cin>>N>>K;
-	vector<int> V(N),big(1e6+1),fac(1e6+1),has(1e6+1),sorted,uniq;
-	int ones=0;
-	for (int i=0; i<N; i++) {
-		cin>>V[i];
-		if (!has[V[i]]) uniq.push_back(V[i]);
-		has[V[i]]++;
-		ones+=V[i]==1;
-	}
-	for (int i : uniq) {
-		i-=K;
-		if (i<=1) continue;
-		for (int o=1; o<=sqrt(i); o++) {
-			if (has[o] && i%o==0) {
-				fac[i]+=has[o];
-				if (i/o!=o) {
-					fac[i]+=has[i/o];
-					// cout << i << "," << i/o << endl;
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+	
+    int N,K; cin>>N>>K;
+    V=vector<int>(N);
+    vector<int> F(1e6+1),ans(1e6+1),inds;
+    for (int i=0; i<N; i++) {
+        cin>>V[i];
+        if (!F[V[i]]) {
+            inds.push_back(A.size());
+            A.push_back(V[i]);
+        }
+        F[V[i]]++;
+    }
+    sort(inds.begin(),inds.end(),cmp);
+	int behind=0;
+    for (int i=0; i<inds.size(); i++) {
+        int val=A[inds[i]];
+        if (val==K) ans[val]+=behind;
+		else if (val>K) {
+			int P=val-K;
+			for (int i=2; i*i<=P; i++) {
+				if (P%i==0) {
+					int a=i,b=P/i;
+					if (val%a==K) ans[val]+=F[a];
+					if (a!=b) {
+						if (val%b==K) ans[val]+=F[b];
+					}
 				}
-				// cout << i << "," << o << endl;
+			}
+			if (K) {
+				if (val%P==K) ans[val]+=F[P];
+			}
+			if (!K) {
+				if (F[val]) ans[val]+=F[val]-1;
+				if (F[1]) ans[val]+=F[1]-(val==1);
 			}
 		}
-	}
-	for (int i=1; i<=1e6; i++) fac[i]-=fac[i]!=0;
-	sorted=V;
-	sort(sorted.begin(),sorted.end(),greater<int>());
-	for (int i=sorted.size()-1; i>=0; i--) {
-		big[sorted[i]]=max(big[sorted[i]],i);
-	}
-	for (int i=0; i<N; i++) {
-		int ans=big[V[i]]*(V[i]==K),t=V[i]-K;
-		if (K!=1 && V[i]%K==0 || t<=0) {
-			cout << ans << ' ';
-			continue;
-		}
-		ans+=fac[t];
-		if (!K) ans+=ones;
-		cout << ans << ' ';
-	}
-	cout << endl;
-	// for (int i=1; i<=10; i++) cout << fac[i] << ' ';
-	// cout << endl;
+		behind+=F[val];
+    }
+    for (int i : V) cout << ans[i] << ' ';
+    cout << endl;
+    
 }
