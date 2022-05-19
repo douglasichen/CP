@@ -52,7 +52,11 @@
 		"xstring": "cpp",
 		"xtr1common": "cpp",
 		"xtree": "cpp",
-		"xutility": "cpp"
+		"xutility": "cpp",
+		"stack": "cpp"
 	},
+	"code-runner.executorMap": {
+        "cpp": "cd $dir && g++-11 -std=c++17 $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+    },
 	"C_Cpp.errorSquiggles": "Disabled"
 }
