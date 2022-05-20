@@ -35,33 +35,26 @@ int main() {
 			}
 		}
 	}
-	for (vector<ll> i : P) cout << "(" << i[0] << "," << i[1] << ") ";
-	for (auto s : S) {
-		for (vector<ll> i : s) {
-			cout << "(" << i[0] << "," << i[1] << "," << i[2] << ") ";
-		}
-		cout << endl;
-	}
 
-	// long long ans=0;
-	// for (int i=0; i<N; i++) {
-	// 	for (int o=0; o<N; o++) {
-	// 		if (i!=o) {
-	// 			//finding third points
-	// 			vector<ll> sl1=sub(P[o],P[i]),sl2=recip(sl1);
-	// 			auto it=lower_bound(S[o].begin(),S[o].end(),vector<ll>{sl2[0],sl2[1],-1},cmp);
-	// 			while (it!=S[o].end()) {
-	// 				int j=(*it)[2];
-	// 				vector<ll> p3=P[j],p4=sub(p3,sl1);
-	// 				if (binary_search(P.begin(),P.end(),p4)) {
-	// 					ll y1=min(P[i][0],min(P[o][0],P[j][0])),y2=max(P[i][0],max(P[o][0],P[j][0]));
-	// 					ll x1=min(P[i][1],min(P[o][1],P[j][1])),x2=max(P[i][1],max(P[o][1],P[j][1]));
-	// 					ans=max(ans,abs(y2-y1)*abs(x2-x1));
-	// 				}
-	// 				it++;
-	// 			}
-	// 		}
-	// 	}
-	// } 
-	// cout << ans << endl;
+	long long ans=0;
+	for (int i=0; i<N; i++) {
+		for (int o=0; o<N; o++) {
+			if (i!=o) {
+				//finding third points
+				vector<ll> sl1=sub(P[o],P[i]),sl2=recip(sl1);
+				auto it=lower_bound(S[o].begin(),S[o].end(),vector<ll>{sl2[0],sl2[1],-1},cmp);
+				while (it!=S[o].end()) {
+					int j=(*it)[2];
+					vector<ll> p3=P[j],p4=sub(p3,sl1);
+					if (binary_search(P.begin(),P.end(),p4)) {
+						ll y1=min(P[i][0],min(P[o][0],P[j][0])),y2=max(P[i][0],max(P[o][0],P[j][0]));
+						ll x1=min(P[i][1],min(P[o][1],P[j][1])),x2=max(P[i][1],max(P[o][1],P[j][1]));
+						ans=max(ans,abs(y2-y1)*abs(x2-x1));
+					}
+					it++;
+				}
+			}
+		}
+	} 
+	cout << ans << endl;
 }
