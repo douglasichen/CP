@@ -1,23 +1,25 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-typedef long long ll;
-typedef vector<int> vi;
-typedef pair<int,int> pi;
-
-#define uMap unordered_map
-#define vec vector
-#define F first
-#define S second
-#define PB push_back
-#define MP make_pair
-#define FOR(x,n) for(int x = 0; x < n; ++x)
+#define endl '\n'
 
 void solve() {
 
 }
 
 int main() {
-	int n = INT_MAX + 1;
-	cout << n << endl;
+	cin.sync_with_stdio(0);
+	cin.tie(0);
+
+	int cnt=0;
+	for (unsigned long long i=1; i<=1000; i++) {
+		unsigned long long a=3*((2*i-1)*powl(3,i)+1)/4, b=0;
+		for (unsigned long long o=1; o<=i; o++) b+=i*powl(3,o);
+		if (a!=b) {
+			cout << i << ' ';
+			cnt++;
+		}
+		if (cnt==10) break;
+	}	
+	cout << endl;
 }
