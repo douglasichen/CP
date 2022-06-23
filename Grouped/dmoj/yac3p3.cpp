@@ -62,37 +62,44 @@ int main() {
 			return 0;
 		}
 	}
-
-	int mn=1e9, mx=-1e9;
-	val=1;
-	for (int i=1; i<=N; i++) {
-		if (i>1) {
-			if (startA[i]) {
-				if (!endA[i-1] || !endB[i-1]) val=1+(V[i-1]==1);
-				else val=min(1,V[i-1]+1);
+	
+	vector<pair<vector<int>,int>> C;
+	for (vector<int> i : A) C.push_back(make_pair(i,0));
+	for (vector<int> i : B) C.push_back(make_pair(i,1));
+	auto srt=[&](pair<vector<int>,int> &a, pair<vector<int>,int> &b){
+		int szA=a.first[1]-a.first[0]+1, szB=b.first[1]-b.first[0]+1;
+		if (szA==szB) return a.first[0]<b.first[0];
+		return szA>szB;
+	};
+	sort(C.begin(),C.end(),srt);
+	for (pair<vector<int>,int> p : C) {
+		vector<int> v=p.first;
+		if (!p.second) {
+			int val=1;
+			for (int i=v[0]; i<=v[1]; i++) {
+				val=max(val,V[i]);
+				while (val==V[i-1]) val++;
+				V[i]=val;
 			}
-			else {
-				if (cntA[i-1] && cntA[i]) val++;
-				else if (cntA[i-1] && cntB[i]) val--;
-				else if (cntA[i-1]) val=V[i-1]-1;
-				else if (cntB[i-1] && cntA[i]) val++;
-				else if (cntB[i-1] && cntB[i]) val--;
-				else if (cntB[i-1]) val++;
-				else if (cntA[i]) val=V[i-1]+(mx-V[i-1]<V[i-1]-mn ? -1 : 1);
-				else if (cntB[i]) val=V
-			}
+			if (V[v[1]]==V[v[1]+1]) V[v[1]]++;
 		}
-		V[i]=val;
-		mn=min(mn,val);
-		mx=max(mx,val);
+		else {
+			int val=1;
+			for (int i=v[1]; i>=v[0]; i--) {
+				val=max(val,V[i]);
+				while (val==V[i+1]) val++;
+				V[i]=val;
+			}
+			if (V[v[0]]==V[v[0]-1]) V[v[0]]++;
+		}
 	}
-
-	// for (int i=1; i<=N; i++) {
-	// 	if (!V[i]) {
-	// 		V[i]=1;
-	// 		while (V[i]==V[i-1] || V[i]==V[i+1]) V[i]++;
-	// 	}
-	// }
-
+	for (int i=1; i<=N; i++) {
+		if (!V[i]) {
+			V[i]=1;
+			while (V[i]==V[i-1] || V[i]==V[i+1]) V[i]++;
+		}
+	}
+	
 	for (int i=1; i<=N; i++) cout << V[i] << ' '; cout << endl;
+	
 }
