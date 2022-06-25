@@ -18,8 +18,9 @@ int main() {
     while (L<R) {
         vis=emp; while (!Q.empty()) Q.pop();
         int mid=(L+R)>>1;
-        mid+=(mid<<1)==L+R;
+        mid+=(mid<<1)!=L+R;
         int sz=mid;
+        
         if (mid==0) break;
         bool gd=0;
         Q.push({sz,sz}); vis[sz][sz]=1;
