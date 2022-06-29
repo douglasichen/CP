@@ -1,24 +1,25 @@
 #include <bits/stdc++.h>
 using namespace std;
-
 #define endl '\n'
-
-void solve() {
-
-}
-
 int main() {
 	cin.sync_with_stdio(0);
 	cin.tie(0);
-
+	
 	int N, L, S; cin>>N>>L>>S;
-	vector<long long> T(L<<1);
-	for (int i=0, a, b, v; i<N; i++) {
-		cin>>a>>b>>v;
-		for (a+=L-1, b+=L; a<b; a>>=1, b>>=1) {
-			if (a&1) T[a]+=v, a++;
-			if (b&1) T[b-1]+=v, b--;
-		}
+	vector<vector<int>> V;
+	for (int i=0,a,b,s; i<N; i++) cin>>a>>b>>s, V.push_back({a,s}), V.push_back({b+1,-s});
+	sort(V.begin(),V.end());
+	vector<vector<int>> tmp={V[0]};
+	for (int i=1; i<V.size(); i++) {
+		if (tmp.back()[0]==V[i][0]) tmp.back()[1]+=V[i][1];
+		else tmp.push_back(V[i]);
 	}
-
+	swap(V,tmp);
+	int K=V.size(), ans=L;
+	for (int i=0; i<K-1; i++) {
+		V[i][1]+=(i ? V[i-1][1] : 0);
+		if (V[i][1]>=S) ans-=V[i+1][0]-V[i][0];
+	}
+	cout << ans << endl;
+	
 }
