@@ -39,5 +39,5 @@ int main() {
 	else {
 		for (int i : ts) cout << i << ' ';
 		cout << endl;
-	}z
+	}
 }
