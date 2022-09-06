@@ -20,13 +20,13 @@ int main() {
 		multiset<int, decltype(cmp)> E(cmp);
 		for (int i=0, val; i<N; i++) {
 			cin>>val, F[val]++;
-			if (F[val]==2) E.insert(val);
+			if (F[val]>=2) E.insert(val);
 		}
-		vector<int> ans(N+1,-1);
+		vector<long long> ans(N+1,-1);
 		int i;
 		for (i=0; i<=N && F[i]; i++) ans[i]=F[i];
 		ans[i]=0;
-		int beh=i, cnt=0;
+		long long beh=i, cnt=0;
 		for (i+=1; i<=N; i++) {
 			if (beh!=-1) {
 				if (E.empty() || *E.rbegin()>=beh) break;
