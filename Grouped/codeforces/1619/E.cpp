@@ -37,7 +37,7 @@ int main() {
 			}
 			ans[i]=cnt+F[i];
 
-			if (F[i]==0) beh=i;
+			if (F[i]==0) beh=i; 
 			else beh=-1;
 		}
 		for (int e=0; e<=N; e++) cout << ans[e] << ' '; cout << endl;
