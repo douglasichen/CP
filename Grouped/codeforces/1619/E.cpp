@@ -3,10 +3,6 @@ using namespace std;
 
 #define endl '\n'
 
-void solve() {
-
-}
-
 int main() {
 	cin.sync_with_stdio(0);
 	cin.tie(0);
@@ -37,7 +33,7 @@ int main() {
 			}
 			ans[i]=cnt+F[i];
 
-			if (F[i]==0) beh=i;
+			if (F[i]==0) beh=i; 
 			else beh=-1;
 		}
 		for (int e=0; e<=N; e++) cout << ans[e] << ' '; cout << endl;
