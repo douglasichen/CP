@@ -3,19 +3,20 @@ using namespace std;
 
 #define endl '\n'
 
-bool solve(string &A, string &B) {
-	int aN=A.size(), bN=B.size();
-	string sA="";
-	for (int b=0, a=0; b<bN; b++, a++) {
-		if (A[a]!=B[b]) {
-			if (A[a]=='b' || a==aN-1) break;
-			if (A[a]==A[a+1]) a++, sA+='b';
-			// else return 0;
+bool solve() {
+	string A, B; cin>>A>>B;
+	int at=0;
+	vector<char> q;
+	for (char &b : B) {
+		q.push_back(b);
+		while (!q.empty()) {
+			char e=q.back();
+			if (e==A[at]) at++, q.pop_back();
+			else if (e<A[at]) return 0;
+			else q.pop_back(), q.push_back(e-1), q.push_back(e-1);
 		}
-		else sA+=A[a];
 	}
-	// cout << sA << " " << B << endl;
-	return sA==B;
+	return at==A.size();
 }
 
 int main() {
@@ -23,8 +24,5 @@ int main() {
 	cin.tie(0);
 
 	int T; cin>>T;
-	while (T--) {
-		string A,B; cin>>A>>B;
-		cout << (solve(A,B) ? "YES" : "NO") << endl;
-	}
+	while (T--) cout << (solve() ? "YES" : "NO") << endl;
 }
