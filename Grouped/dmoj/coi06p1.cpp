@@ -10,6 +10,7 @@ int main() {
 	long long ans=0;
 	int N; cin>>N;
 	vector<int> S;
+<<<<<<< HEAD
 	for (int i=0, e; i<N; i++) {
 		cin>>e;
 
@@ -23,6 +24,18 @@ int main() {
 
 		while (S.size() && S.back()<e) S.pop_back();
 		S.push_back(e);
+=======
+	map<int,int> F;
+	for (int i=0, cnt, e; i<N; i++) {
+		cin>>e;
+		cnt=0;
+		while (!S.empty() && S.top()<e) F[S.top()]--, S.pop(), cnt++;
+		int add=cnt+F[e];
+		if (add<S.size()+cnt) add++;
+		ans+=add;
+		F[e]++;
+		S.push(e);
+>>>>>>> 8a463f770f4125afabefad2860dbd9e821987674
 	}
 	cout << ans << endl;
 }
