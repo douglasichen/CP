@@ -10,21 +10,22 @@ int main() {
     while (T--) {
         int N; cin>>N;
         string S; cin>>S;
-        char mn=*min_element(S.begin(), S.end());
-        vector<int> dif(N,INT_MAX);
-        int start;
-        for (int i=0; i<N; i++) {
-            if (S[i]==mn) {
-                start=i;
-                break;
-            }
-        }
-        string ans="";
-        for (int i=start; i<N+start; i++) ans+=S[i%N];
-        int lastMn=start;
-        for (int i=start+1; i<N+start; i++) {
-            if (V[i%N]==mn) lastMn=i%N;
-            if (V[i%N]<ans[i-start]) start=lastMn
-        }
+		vector<int> F('z'+1);
+		int cnt=0;
+		for (char c : S) F[c]++, cnt+=F[c]==1;
+		
+		vector<char> alph(26);
+		vector<char> rep(26);
+		iota(alph.begin(), alph.end(), 'a');
+		for (int a=0, b=0; a<N && b<N; a++) {
+			char c=S[a];
+			if (!rep[c]) {
+				if (c==alph[b]) swap(alph[b], alph[b+1]);
+				rep[c]=alph[b];
+				b++;
+			}
+		}
+		for (char &c : S) c=rep[c];
+		cout << S << endl;
     }
 }
