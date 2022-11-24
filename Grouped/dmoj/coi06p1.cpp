@@ -10,16 +10,19 @@ int main() {
 	long long ans=0;
 	int N; cin>>N;
 	vector<int> S;
-	map<int,int> F;
-	for (int i=0, cnt, e; i<N; i++) {
+	for (int i=0, e; i<N; i++) {
 		cin>>e;
-		cnt=0;
-		while (!S.empty() && S.top()<e) F[S.top()]--, S.pop(), cnt++;
-		int add=cnt+F[e];
-		if (add<S.size()+cnt) add++;
-		ans+=add;
-		F[e]++;
-		S.push(e);
+
+		int L=0, R=S.size()-1;
+		while (L<R) {
+			int M=L+R+1>>1;
+			if (S[M]<=e) R=M-1;
+			else L=M;
+		}
+		ans+=S.size()-L;
+
+		while (S.size() && S.back()<e) S.pop_back();
+		S.push_back(e);
 	}
 	cout << ans << endl;
 }

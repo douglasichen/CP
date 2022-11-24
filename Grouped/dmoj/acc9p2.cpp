@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-// #define endl '\n'
+#define endl '\n'
 
 int md=998244353;
 
@@ -54,11 +54,13 @@ int main() {
             if (N==1) ans=V[0];
             else {
                 for (int i=0; i<N; i++) {
-                    if (V[i]==1 || (i<N-1 && V[i]==-1 && V[i+1]==-1))
+                    if (V[i]==1 || i<N-1 && V[i]==-1 && V[i+1]==-1)
                         ans=1;
                 }
             }
         }
+		if (ans<0) ans+=md;
+
         cout << ans << endl;
     }
 }
