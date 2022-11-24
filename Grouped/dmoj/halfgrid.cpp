@@ -18,7 +18,6 @@ int fpow(int a, int b) {
 }
 
 long long ways(int W, int H) {
-	if (W==0 && H==0) return 0;
 	if (W>H) swap(W,H);
 	int Z=W+H;
 	vector<int> F(Z+1);
@@ -47,7 +46,6 @@ int main() {
 	cin.sync_with_stdio(0);
 	cin.tie(0);
 
-	// precompute spf
 	for (int i=2,at; i<=mx; i++) {
 		at=i;
 		while (at+i<=mx) {
@@ -56,12 +54,12 @@ int main() {
 		}
 	}
 	
-	int W,H,X,Z; cin>>W>>H>>X;
+	int W,H,X; cin>>W>>H>>X;
 	long long ans=ways(W-1, H-1);
-	vector<int> a(2), b(2);
-	if (X) {
-		cin>>a[0]>>a[1];
-		ans-=ways(a[0]-1,a[1]-1)*ways(W-a[0], H-a[1])%md;
+	int a,b,c,d;
+	if (X==1) {
+		cin>>a>>b;
+		ans-=ways(a-1,b-1)*ways(W-a, H-b)%md;
 	}
 	if (X==2) {
 		cin>>b[0]>>b[1];
