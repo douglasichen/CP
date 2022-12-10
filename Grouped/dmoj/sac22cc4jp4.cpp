@@ -1,15 +1,15 @@
 #include <bits/stdc++.h>
-// #define endl '\n'
+#define endl '\n'
 using namespace std;
 
-int gcd(int a, int b) {
+long long gcd(long long a, long long b) {
     while (b)
         a%=b,
         swap(a,b);
     return a;
 }
 
-int lcm(int a, int b) {
+long long lcm(long long a, long long b) {
     return a/gcd(a,b)*b;
 }
 
@@ -24,7 +24,7 @@ int main() {
     
     vector<bool> vis(N);
     vector<int> cnts(N);
-    int a=1;
+    long long a=1;
     for (int i=0; i<N; i++) {
         if (vis[i]) continue;
         vis[i]=1;
