@@ -6,7 +6,7 @@ using namespace std;
 int main() {
 	cin.sync_with_stdio(0);
 	cin.tie(0);
-
+	
 	freopen("angry.in", "r", stdin);
 	freopen("angry.out", "w", stdout);
 	
