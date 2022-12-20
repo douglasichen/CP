@@ -1,79 +1,55 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define endl '\n'
-#define ll long long
 
-ll md=1e9+7, p=3, N,A,B,Q,L,R;
-map<char,int> conv={{'R',0}, {'G',1}, {'B',2}};
-char c;
-ll P[1000000];
+#define endl '\n'
+
 
 int main() {
-    cin.sync_with_stdio(0);
-    cin.tie(0);
+	cin.sync_with_stdio(0);
+	cin.tie(0);
 
-    // init 
-    P[0]=1;
-    for (int i=1; i<1e6; i++) P[i]=P[i-1]*p%md;
+	map<char,int> M;
+	M['R']=0;
+	M['G']=1;
+	M['B']=2;
 
-    cin>>N;
-    vector<vector<ll>> T(3, vector<ll>(N<<1));
-    A=0;
-    for (int i=0; i<N; i++) cin>>c, T[conv[c]][N+i]=P[i], A=(A+(conv[c]+1)*P[i]%md)%md;
-    for (int o=0; o<3; o++)
-        for (int i=N-1; i; i--) 
-            T[o][i]=(T[o][i<<1] + T[o][i<<1|1])%md;
-    
-    B=0;
-    for (int i=0; i<N; i++) cin>>c, B=(B+(conv[c]+1)*P[i]%md)%md;
-    
-    cout << A << ' ' << B << endl;
-    if (A==B) {
-        cout << 0 << endl;
-        return 0;
-    }
+	int N; cin>>N;
+	vector<int> A(N+2), B(N+2), D(N+2);
+	char c;
+	for (int i=1; i<=N; i++) cin>>c, A[i]=M[c];
+	for (int i=1; i<=N; i++) cin>>c, B[i]=M[c];
+	for (int i=1; i<=N+1; i++) D[i]=B[i]-A[i];
+	for (int i=N; i; i--) D[i]=(D[i]-D[i-1]+3)%3;
+	
+	// 0 case
+	if (A==B) {
+		cout << 0 << endl;
+		return 0;
+	}
 
-    cin>>Q;
-    for (int q=1; q<=Q; q++) {
-        cin>>L>>R; L--;
-        // swap sums in interval l,r
-        for (L+=N, R+=N; L<R; L>>=1, R>>=1) {
-            if (L&1) {
-                swap(T[2][L], T[1][L]);
-                swap(T[1][L], T[0][L]);
-                L++;
-            }
-            if (R&1) {
-                R--;
-                swap(T[2][R], T[1][R]);
-                swap(T[1][R], T[0][R]);
-            }
-        }
+	// cnt=# of non 0'sa
+	int cnt=0;
+	for (int i=1; i<=N; i++) cnt+=(D[i]!=0);
 
-        // get sum
-        A=0;
-        for (int i=0; i<3; i++) {
-            L=0, R=N;
-            for (L+=N, R+=N; L<R; L>>=1, R>>=1) {
-                if (L&1) {
-                    A=(A + (i+1)*T[i][L]%md)%md;
-                    L++;
-                }
-                if (R&1) {
-                    R--;
-                    A=(A + (i+1)*T[i][R]%md)%md;
-                }
-            }
-        }
-        cout << A << ' ' << B << endl;
-        
-        // compare sum
-        if (A==B) {
-            cout << q << endl;
-            return 0;
-        }
-    }
-    cout << -1 << endl;
+	// queries
+	int Q; cin>>Q;
+	for (int q=1; q<=Q; q++) {
+		int L,R; cin>>L>>R;
+		if (D[L]==0) cnt++;
+		if (R<N && D[R+1]==0) cnt++;
 
+		D[L]=(D[L]-1+3)%3;
+		D[R+1]=(D[R+1]+1)%3;
+		
+		if (!D[L]) cnt--;
+		if (R<N && !D[R+1]) cnt--;
 
+		// for (int i=1; i<=N; i++) cout << D[i] << ' '; cout << endl;
+		
+		if (cnt==0) {
+			cout << q << endl;
+			return 0;
+		}
+	}
+	cout << -1 << endl;
 }
