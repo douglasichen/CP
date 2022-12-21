@@ -39,8 +39,8 @@ int main() {
     }
     sort(ans.begin(), ans.end());
     for (int i : ans) {
-        cout << "Yodeller " <<  ord[i]+1 << " is the TopYodeller: score " << scr[ord[i]] << 
-        ", worst rank " << wRank[ord[i]] << endl;
+        cout << "Yodeller " <<  i+1 << " is the TopYodeller: score " << scr[i] << 
+        ", worst rank " << wRank[i] << endl;
     }
     // cout << ord[0]+1 << ' ' << wRank[ord[0]] << endl;
 }
